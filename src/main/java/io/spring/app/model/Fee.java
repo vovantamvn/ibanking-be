@@ -12,8 +12,12 @@ import javax.validation.constraints.PositiveOrZero;
 @Entity
 public class Fee extends BaseEntity {
     @ManyToOne
-    private Account owner;
+    private Student owner;
 
     @PositiveOrZero
     private long cost;
+
+    private int term;
+
+    private boolean isPaid = false;
 }

@@ -8,8 +8,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -33,7 +31,4 @@ public class Account extends BaseEntity {
 
     @PositiveOrZero
     private long balance;
-
-    @OneToMany(mappedBy = "owner")
-    private Set<Fee> fees = new HashSet<>();
 }
