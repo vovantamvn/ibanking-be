@@ -1,20 +1,18 @@
 package io.spring.app.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
 public class Otp extends BaseEntity {
-    @NotBlank
-    private String content;
+  @NotBlank private String content;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime expireAt;
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime expireAt;
 }

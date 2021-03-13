@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/accounts")
 @RequiredArgsConstructor
 public class AccountController {
-    private final AccountService accountService;
+  private final AccountService accountService;
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<AccountData> findById(@PathVariable long id) {
-        return ResponseEntity.ok(accountService.findById(id));
-    }
+  @GetMapping(path = "/{id}")
+  public ResponseEntity<AccountData> findById(@PathVariable long id) {
+    return ResponseEntity.ok(accountService.findById(id));
+  }
 }

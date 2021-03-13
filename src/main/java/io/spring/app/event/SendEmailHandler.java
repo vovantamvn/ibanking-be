@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SendEmailHandler implements ApplicationListener<SendEmailEvent> {
-    private final SendEmail sendEmail;
+  private final SendEmail sendEmail;
 
-    @Override
-    public void onApplicationEvent(SendEmailEvent event) {
-        sendEmail.send(event.getEmail(), event.getContent());
-    }
+  @Override
+  public void onApplicationEvent(SendEmailEvent event) {
+    sendEmail.send(event.getEmail(), event.getContent());
+  }
 }

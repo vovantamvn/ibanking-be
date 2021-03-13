@@ -11,15 +11,13 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AccountControllerTest {
-    @MockBean
-    private AccountService accountService;
+  @MockBean private AccountService accountService;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+  @Autowired private TestRestTemplate restTemplate;
 
-    @Test
-    void findById() {
-        restTemplate.getForObject("/accounts/1", AccountData.class);
-        Mockito.verify(accountService).findById(1);
-    }
+  @Test
+  void findById() {
+    restTemplate.getForObject("/accounts/1", AccountData.class);
+    Mockito.verify(accountService).findById(1);
+  }
 }

@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FeeData {
-    private long cost;
+  private long cost;
 
-    private int term;
+  private int term;
 
-    private boolean isPaid;
+  private boolean isPaid;
 }

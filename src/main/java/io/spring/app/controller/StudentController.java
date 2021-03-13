@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping(path = "/students")
 public class StudentController {
-    private final StudentService studentService;
+  private final StudentService studentService;
 
-    @GetMapping(path = "/{studentCode}")
-    public ResponseEntity<StudentData> findById(@PathVariable String studentCode) {
-        return ResponseEntity.ok(studentService.findByStudentCode(studentCode));
-    }
+  @GetMapping(path = "/{studentCode}")
+  public ResponseEntity<StudentData> findById(@PathVariable String studentCode) {
+    return ResponseEntity.ok(studentService.findByStudentCode(studentCode));
+  }
 
-    @GetMapping(path = "/{studentCode}/fees")
-    public ResponseEntity<FeeData> findFeeOfStudent(@PathVariable String studentCode) {
-        FeeData feeData = new FeeData();
-        feeData.setCost(10000);
-        feeData.setTerm(1);
-        feeData.setPaid(false);
+  @GetMapping(path = "/{studentCode}/fees")
+  public ResponseEntity<FeeData> findFeeOfStudent(@PathVariable String studentCode) {
+    FeeData feeData = new FeeData();
+    feeData.setCost(10000);
+    feeData.setTerm(1);
+    feeData.setPaid(false);
 
-        return ResponseEntity.ok(feeData);
-    }
+    return ResponseEntity.ok(feeData);
+  }
 }

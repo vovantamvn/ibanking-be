@@ -11,15 +11,13 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class StudentControllerTest {
-    @MockBean
-    private StudentService studentService;
+  @MockBean private StudentService studentService;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+  @Autowired private TestRestTemplate restTemplate;
 
-    @Test
-    void findById() {
-        restTemplate.getForObject("/students/102170053", StudentData.class);
-        Mockito.verify(studentService).findByStudentCode("102170053");
-    }
+  @Test
+  void findById() {
+    restTemplate.getForObject("/students/102170053", StudentData.class);
+    Mockito.verify(studentService).findByStudentCode("102170053");
+  }
 }
