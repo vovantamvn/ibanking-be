@@ -2,11 +2,13 @@ package io.spring.app.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import io.spring.app.dto.StudentData;
-import io.spring.app.model.Student;
-import io.spring.app.repository.StudentRepository;
+import io.spring.app.core.student.StudentData;
+import io.spring.app.core.student.Student;
+import io.spring.app.core.student.StudentRepository;
 import java.time.LocalDate;
 import java.util.Optional;
+
+import io.spring.app.core.student.StudentService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
