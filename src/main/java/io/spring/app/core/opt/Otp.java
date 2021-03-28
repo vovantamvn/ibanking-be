@@ -22,6 +22,6 @@ public class Otp extends BaseEntity {
     @Column(nullable = false, updatable = false)
     private LocalDateTime expireAt;
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne
     private Bill bill;
 }

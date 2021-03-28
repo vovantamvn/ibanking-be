@@ -2,8 +2,8 @@ package io.spring.app.core.bill;
 
 import io.spring.app.core.BaseEntity;
 import io.spring.app.core.account.Account;
+import io.spring.app.core.fee.Fee;
 import io.spring.app.core.opt.Otp;
-import io.spring.app.core.student.Student;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Setter
@@ -23,7 +24,10 @@ public class Bill extends BaseEntity {
 
     @NotNull
     @ManyToOne
-    private Student student;
+    private Fee fee;
+
+    @Positive
+    private long cost;
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)

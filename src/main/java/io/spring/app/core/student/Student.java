@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import io.spring.app.core.BaseEntity;
 import io.spring.app.core.bill.Bill;
@@ -20,22 +21,11 @@ public class Student extends BaseEntity {
     @Column(unique = true, updatable = false)
     private String studentCode;
 
+    @NotBlank
     private String fullName;
 
     private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Fee> fees = new ArrayList<>();
-
-    @OneToMany(mappedBy = "student")
-    private List<Bill> bills = new ArrayList<>();
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "studentCode='" + studentCode + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                '}';
-    }
 }

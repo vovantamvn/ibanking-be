@@ -8,10 +8,7 @@ import io.spring.app.core.account.AccountRepository;
 import io.spring.app.core.student.StudentRepository;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.stream.IntStream;
+import java.util.*;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +24,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-//    @EventListener(classes = ContextRefreshedEvent.class)
+    @EventListener(classes = ContextRefreshedEvent.class)
     public void fakeData(ContextRefreshedEvent event) {
         System.out.println("\n------------------------------FAKE DATA--------------------------------\n");
         ApplicationContext context = event.getApplicationContext();
@@ -62,22 +59,19 @@ public class Application {
         for (int i = 0; i < 40; i++) {
             Random random = new Random(System.currentTimeMillis());
 
+            Student student = new Student();
+            student.setDateOfBirth(LocalDate.of(1999, 06, 25));
+            student.setFullName(createFullName(random));
+            student.setStudentCode(createStudentCode(i));
+            student.setFees(new ArrayList<>());
+            studentRepository.save(student);
+
             // 7_000_000 - 8_000_000
             int cost = (random.nextInt(10) + 70) * 100000;
 
             Fee fee = new Fee();
             fee.setCost(cost);
-            fee.setPaid(false);
             fee.setTerm(1);
-
-            Student student = new Student();
-            student.setDateOfBirth(LocalDate.of(1999, 06, 25));
-            student.setFullName(createFullName(random));
-            student.setStudentCode(createStudentCode(i));
-            student.setFees(List.of(fee));
-
-            studentRepository.save(student);
-
             fee.setStudent(student);
             feeRepository.save(fee);
         }

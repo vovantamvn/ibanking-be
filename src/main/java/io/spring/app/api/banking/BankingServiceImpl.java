@@ -5,23 +5,23 @@ import io.spring.app.core.account.AccountRepository;
 import io.spring.app.core.bill.Bill;
 import io.spring.app.core.bill.BillRepository;
 import io.spring.app.core.fee.Fee;
-import io.spring.app.core.fee.FeeRepository;
 import io.spring.app.core.opt.OptRepository;
 import io.spring.app.core.opt.Otp;
 import io.spring.app.core.student.Student;
 import io.spring.app.core.student.StudentRepository;
+import io.spring.app.event.SendEmailEvent;
 import io.spring.app.exception.MyException;
 import io.spring.app.utils.GenerateOpt;
-import io.spring.app.utils.SendEmail;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +30,8 @@ public class BankingServiceImpl implements BankingService {
     private final StudentRepository studentRepository;
     private final GenerateOpt generateOpt;
     private final BillRepository billRepository;
-    private final SendEmail sendEmail;
     private final OptRepository optRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     @Transactional
@@ -47,12 +47,16 @@ public class BankingServiceImpl implements BankingService {
 
         Bill bill = new Bill();
         bill.setAccount(account);
-        bill.setStudent(student);
+        bill.setFee(fee);
         bill.setOtp(otp);
-
+        bill.setCost(request.getAmount());
         billRepository.save(bill);
 
-        sendEmail.send(account.getEmail(), "Code: " + otp.getContent());
+        SendEmailEvent sendEmailEvent = new SendEmailEvent(
+                this, account.getEmail(),
+                "Code: " + otp.getContent()
+        );
+        applicationEventPublisher.publishEvent(sendEmailEvent);
 
         return bill.getId();
     }
@@ -84,18 +88,8 @@ public class BankingServiceImpl implements BankingService {
 
     private Fee getFeeOfStudent(Student student) {
         List<Fee> fees = student.getFees();
-        LocalDateTime localDateTime = null;
-        Fee result = fees.get(0);
-
-        // Get latest fee
-        for (Fee fee : fees) {
-            if (localDateTime == null || fee.getCreateAt().isAfter(localDateTime)) {
-                localDateTime = fee.getCreateAt();
-                result = fee;
-            }
-        }
-
-        return result;
+        Collections.sort(fees, Comparator.comparingInt(Fee::getTerm));
+        return fees.get(fees.size() - 1);
     }
 
     private Account getAccount(String username) {
