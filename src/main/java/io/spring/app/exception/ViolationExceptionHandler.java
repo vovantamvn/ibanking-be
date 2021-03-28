@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Log4j2
 public class ViolationExceptionHandler {
 
-    @ExceptionHandler(value = MyException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = MyException.class)
     public String handler(MyException exception) {
-        log.error(exception.getMessage());
-        return exception.getMessage();
+        String message = exception.getMessage();
+        log.error(message);
+        return message;
     }
 }
