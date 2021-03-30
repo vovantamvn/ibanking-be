@@ -29,6 +29,8 @@ public class Bill extends BaseEntity {
     @Positive
     private long cost;
 
+    boolean isValid = true;
+
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     private Otp otp;

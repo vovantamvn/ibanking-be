@@ -1,6 +1,7 @@
 package io.spring.app.api.student;
 
 import io.spring.app.core.fee.FeeData;
+import io.spring.app.core.fee.FeeService;
 import io.spring.app.core.student.StudentData;
 import io.spring.app.core.student.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/students")
 public class StudentController {
     private final StudentService studentService;
+    private final FeeService feeService;
 
     @GetMapping(path = "/{studentCode}")
     public ResponseEntity<StudentData> findByStudentCode(@PathVariable String studentCode) {
@@ -23,11 +25,7 @@ public class StudentController {
 
     @GetMapping(path = "/{studentCode}/fees")
     public ResponseEntity<FeeData> findFeeOfStudent(@PathVariable String studentCode) {
-        FeeData feeData = new FeeData();
-        feeData.setCost(10000);
-        feeData.setTerm(1);
-        feeData.setPaid(false);
-
+        FeeData feeData = feeService.getFeeOfStudentByStudentId(studentCode);
         return ResponseEntity.ok(feeData);
     }
 }

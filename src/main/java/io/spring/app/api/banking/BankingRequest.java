@@ -8,8 +8,6 @@ import javax.validation.constraints.Positive;
 
 @Getter
 public class BankingRequest {
-    @NotBlank(message = "Username must be not blank")
-    private String username;
     @Pattern(regexp = "[0-9]{9}")
     private String studentCode;
     @Positive(message = "Amount must be a positive number")

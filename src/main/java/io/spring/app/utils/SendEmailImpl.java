@@ -38,6 +38,7 @@ public class SendEmailImpl implements SendEmail {
             transport.connect("smtp.gmail.com", username, password);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
+            log.info("Send email to [" + email + "] success!");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

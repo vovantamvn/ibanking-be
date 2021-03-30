@@ -14,6 +14,7 @@ import io.spring.app.exception.MyException;
 import io.spring.app.utils.GenerateOpt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,7 +37,8 @@ public class BankingServiceImpl implements BankingService {
     @Override
     @Transactional
     public long processBanking(BankingRequest request) {
-        Account account = getAccount(request.getUsername());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Account account = getAccount(username);
         Student student = getStudent(request.getStudentCode());
 
         Fee fee = getFeeOfStudent(student);
@@ -80,9 +82,10 @@ public class BankingServiceImpl implements BankingService {
     }
 
     private Otp createOtp() {
+        int minutes = 5;
         Otp otp = new Otp();
         otp.setContent(generateOpt.newOpt());
-        otp.setExpireAt(LocalDateTime.now().plusMinutes(5));
+        otp.setExpireAt(LocalDateTime.now().plusMinutes(minutes));
         return otp;
     }
 
